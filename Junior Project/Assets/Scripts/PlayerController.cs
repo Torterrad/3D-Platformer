@@ -79,11 +79,15 @@ public class PlayerController : MonoBehaviour
         //is press space and on the ground, add foce to jump, set them to not be on ground
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
+            Jump();
         }
     }
 
+    void Jump()
+    {
+        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        isGrounded = false;
+    }
 
 
 }
