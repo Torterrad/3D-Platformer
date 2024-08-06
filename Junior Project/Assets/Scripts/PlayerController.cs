@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    public float rotationSpeed;
     private Rigidbody playerRb;
 
     public float jumpForce;
@@ -49,6 +50,18 @@ public class PlayerController : MonoBehaviour
         playerRb.AddForce(Vector3.forward * speed * verticalInput);
         playerRb.AddForce(Vector3.right * speed * horizontalInput);
 
+
+        
+        //calculate movement direction
+        Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
+        if(movementDirection!= Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        }
+
+
         //is press space and on the ground, add foce to jump, set them to not be on ground
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
@@ -56,5 +69,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
+
+
 
 }
