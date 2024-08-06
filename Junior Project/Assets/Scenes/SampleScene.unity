@@ -800,7 +800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1825675342}
-  offset: {x: 0, y: 4, z: -7}
+  offset: {x: 0, y: 3, z: -7}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,6 +1104,14 @@ PrefabInstance:
     - target: {fileID: 2404347876250111517, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3535351287846252600, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
+      propertyPath: acceleration
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3535351287846252600, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
+      propertyPath: deceleration
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3535351287846252600, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: rotationSpeed

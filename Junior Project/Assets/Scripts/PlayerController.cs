@@ -6,10 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     public float rotationSpeed;
-    private Rigidbody playerRb;
-
+    public float acceleration;
+    public float deceleration;
     public float jumpForce;
     public float gravityModifier;
+
+    private Rigidbody playerRb;
+
+    private Vector3 currentVelocity;
 
     public bool isGrounded = true;
 
@@ -46,15 +50,25 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        //adds force to move times the speed, the input axis and the force mode
-        playerRb.AddForce(Vector3.forward * speed * verticalInput);
-        playerRb.AddForce(Vector3.right * speed * horizontalInput);
+        //calculates target velocity based on player input and speed
+        Vector3 targetVelocity = new Vector3(horizontalInput, 0f, verticalInput) * speed;
 
+        // Interpolate the current velocity towards the target velocity
+        if (targetVelocity.magnitude > 0.1f)
+        {
+            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);
+        }
+        else
+        {
+            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
+        }
 
-        
+        playerRb.velocity = new Vector3(currentVelocity.x, playerRb.velocity.y, currentVelocity.z);
+
         //calculate movement direction
         Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
+        //rotate player to face movement direction
         if(movementDirection!= Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
