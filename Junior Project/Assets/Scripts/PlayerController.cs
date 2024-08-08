@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float gravityModifier;
 
+    private float coyoteTime = 0.05f;
+    private float coyoteTimeCounter;
+
+    private float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
+
     private Rigidbody playerRb;
 
     private Vector3 currentVelocity;
@@ -29,6 +35,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -75,9 +82,28 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
         }
 
+        //if grounded, reset the coyote timer
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else//else countdown the timer, do count when off the ground/in air
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+        //if space pressed
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
 
-        //is press space and on the ground, add foce to jump, set them to not be on ground
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+
+        //If the jump counter is zero and coyote time counter is zero jump when space is presed
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             Jump();
         }
@@ -87,6 +113,9 @@ public class PlayerController : MonoBehaviour
     {
         playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
+
+        coyoteTimeCounter = 0f;
+        jumpBufferCounter = 0f;
     }
 
 
