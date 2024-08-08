@@ -361,6 +361,7 @@
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/Projectile.cs"
 "Assets/Scripts/ShootingEnemy.cs"
+"Assets/Scripts/Spin.cs"
 "Assets/Scripts/ThirdPerson Movement/ThirdPersonCamera.cs"
 -langversion:9.0
 /deterministic

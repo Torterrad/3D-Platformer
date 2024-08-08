@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier;
 
     public int health = 3;
+    public int coinCount;
 
     private float coyoteTime = 0.05f;
     private float coyoteTimeCounter;
@@ -28,8 +29,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 currentVelocity;
 
     public TextMeshProUGUI healthText;
+    public TextMeshProUGUI coinText;
 
-   
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
         healthText.text = "Health: " + health;
+        coinText.text = "Coin: " + coinCount;
     }
 
     // Update is called once per frame
@@ -59,6 +61,16 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
             health--;
             healthText.text = "Health: " + health;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            coinCount++;
+            coinText.text = "Coins: " + coinCount;
+            Destroy(other.gameObject);
         }
     }
 
@@ -158,6 +170,8 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
+    
 
     void PlayerDeath()
     {
