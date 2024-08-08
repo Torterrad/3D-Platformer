@@ -20,6 +20,6 @@ public class ShootingEnemy : MonoBehaviour
 
     void Shoot()
     {
-        Instantiate(projectile, shootPoint.transform.position, projectile.transform.rotation);
+        Instantiate(projectile, shootPoint.transform.position, shootPoint.rotation);
     }
 }

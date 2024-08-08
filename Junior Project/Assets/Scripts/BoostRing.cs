@@ -36,7 +36,7 @@ public class BoostRing : MonoBehaviour
     IEnumerator ApplyForceOverTime(Vector3 direction)
     {
        // Debug.DrawRay(transform.position, direction * 100, Color.red, 8f);
-        float duration = 0.75f;
+        float duration = 0.8f;
         float elapsedTime = 0f;
 
         while(elapsedTime < duration)

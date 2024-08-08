@@ -16,7 +16,8 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        projectileRb.AddForce(Vector3.right * projectilespeed);
+        projectileRb.AddRelativeForce(Vector3.right * projectilespeed);
+       // projectileRb.transform.TransformDirection(Vector3.back * projectilespeed);
     }
 
     IEnumerator Despawn()

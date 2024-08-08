@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float gravityModifier;
 
+    public int health = 3;
+
     private float coyoteTime = 0.05f;
     private float coyoteTimeCounter;
 
@@ -47,7 +49,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Ow");
+            Destroy(collision.gameObject);
+            health--;
         }
     }
 
@@ -58,7 +61,7 @@ public class PlayerController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         //calculates target velocity based on player input and speed
-        Vector3 targetVelocity = new Vector3(horizontalInput, 0f, verticalInput) * speed;
+        Vector3 targetVelocity = new Vector3(horizontalInput, 0f, verticalInput).normalized * speed;
 
         // Interpolate the current velocity towards the target velocity
         if (targetVelocity.magnitude > 0.1f)
