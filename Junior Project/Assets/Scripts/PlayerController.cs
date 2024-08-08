@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private float coyoteTime = 0.05f;
     private float coyoteTimeCounter;
 
+    public bool isGrounded = true;
+
     private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
@@ -23,7 +27,9 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 currentVelocity;
 
-    public bool isGrounded = true;
+    public TextMeshProUGUI healthText;
+
+   
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +37,14 @@ public class PlayerController : MonoBehaviour
         //sets gravity modifier for entire scene
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
+        healthText.text = "Health: " + health;
     }
 
     // Update is called once per frame
     void Update()
     {
         MovePlayer();
-
+        PlayerDeath();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -51,6 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             health--;
+            healthText.text = "Health: " + health;
         }
     }
 
@@ -151,6 +159,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void PlayerDeath()
+    {
+        if(health < 1)
+        {
+            Debug.Log("Dead");
+        }
+    }
 
 
 }
