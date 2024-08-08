@@ -107,18 +107,47 @@ public class PlayerController : MonoBehaviour
         //If the jump counter is zero and coyote time counter is zero jump when space is presed
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
-            Jump();
+            StartJump();
         }
     }
 
-    void Jump()
+    void StartJump()
     {
-        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        StartCoroutine(Jump());
+       //playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
 
         coyoteTimeCounter = 0f;
         jumpBufferCounter = 0f;
     }
+
+    public float duration = 0.1f;
+
+    IEnumerator Jump()
+    {
+        
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            //calculates the decreasing force over time
+            float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / duration);
+            //sets launch this frame to launch strength * decay/force decrease
+            float forceThisFrame = jumpForce * forceMultiplier;
+
+            //adds force to launch player in the forward direction * the force this frame
+            // playerrb.AddForce(direction.x, direction.y , direction.z * forceThisFrame, ForceMode.Impulse);
+            Vector3 launchVelocity = Vector3.up * forceThisFrame;
+            //set the players velocity to be in the direction and force per frame strength
+
+            playerRb.velocity += launchVelocity;
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+
+        }
+    }
+
 
 
 }
