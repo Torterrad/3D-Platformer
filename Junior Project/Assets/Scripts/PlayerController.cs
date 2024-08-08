@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody playerRb;
 
-    private Vector3 currentVelocity;
+    public Vector3 currentVelocity;
 
     public bool isGrounded = true;
 
@@ -70,7 +70,9 @@ public class PlayerController : MonoBehaviour
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
         }
 
-        playerRb.velocity = new Vector3(currentVelocity.x, playerRb.velocity.y, currentVelocity.z);
+        //updates the players position/applies the velocity moves player
+        playerRb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
+
 
         //calculate movement direction
         Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
