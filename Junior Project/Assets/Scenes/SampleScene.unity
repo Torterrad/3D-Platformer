@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 37259101}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -915,7 +915,7 @@ GameObject:
   - component: {fileID: 591650639}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1020,7 +1020,7 @@ GameObject:
   - component: {fileID: 632360008}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1266,7 +1266,7 @@ GameObject:
   - component: {fileID: 683784807}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2137,15 +2137,15 @@ MonoBehaviour:
   rotationSpeed: 3600
   acceleration: 750
   deceleration: 750
-  jumpForce: 75
-  gravityModifier: 175
+  jumpForce: 250
+  gravityModifier: 300
   health: 3
   coinCount: 0
   isGrounded: 1
   currentVelocity: {x: 0, y: 0, z: 0}
   healthText: {fileID: 2145388421}
   coinText: {fileID: 767538839}
-  duration: 0.8
+  duration: 0.1
 --- !u!1001 &1074543319
 PrefabInstance:
   m_ObjectHideFlags: 0

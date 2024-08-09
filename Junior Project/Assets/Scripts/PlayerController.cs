@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float gravityModifier;
 
+
     public int health = 3;
     public int coinCount;
 
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         //sets gravity modifier for entire scene
         playerRb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;
+    //    Physics.gravity *= gravityModifier;
         healthText.text = "Health: " + health;
         coinText.text = "Coin: " + coinCount;
     }
@@ -93,20 +94,6 @@ public class PlayerController : MonoBehaviour
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
         }
 
-        //updates the players position/applies the velocity moves player
-        playerRb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
-
-
-        //calculate movement direction
-        Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-
-        //rotate player to face movement direction
-        if(movementDirection!= Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-        }
-
         //if grounded, reset the coyote timer
         if (isGrounded)
         {
@@ -126,18 +113,49 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
         }
 
+        if (!isGrounded)
+        {
+            playerRb.AddForce(Vector3.down * gravityModifier, ForceMode.Acceleration);
+        }
+
 
         //If the jump counter is zero and coyote time counter is zero jump when space is presed
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             StartJump();
         }
+        if (Input.GetKeyUp(KeyCode.Space) && !isGrounded && playerRb.velocity.y > 0)
+        {
+            float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.deltaTime * 10f);
+            //code here for stopping the player rising, the short jump
+            currentVelocity = new Vector3(currentVelocity.x, smoothedYVelocity, currentVelocity.z);
+        }
+
+
+
+        //updates the players position/applies the velocity moves player
+        playerRb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
+
+
+        //calculate movement direction
+        Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
+        //rotate player to face movement direction
+        if(movementDirection!= Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        }
+
     }
 
     void StartJump()
     {
-        StartCoroutine(Jump());
-       //playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //jump code goes here
+        float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.deltaTime * 10f);
+        currentVelocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
+        
+
         isGrounded = false;
 
         coyoteTimeCounter = 0f;
@@ -145,33 +163,6 @@ public class PlayerController : MonoBehaviour
     }
 
     public float duration = 0.1f;
-
-    IEnumerator Jump()
-    {
-        
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            //calculates the decreasing force over time
-            float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / duration);
-            //sets launch this frame to launch strength * decay/force decrease
-            float forceThisFrame = jumpForce * forceMultiplier;
-
-            //adds force to launch player in the forward direction * the force this frame
-            // playerrb.AddForce(direction.x, direction.y , direction.z * forceThisFrame, ForceMode.Impulse);
-            Vector3 launchVelocity = Vector3.up * forceThisFrame;
-            //set the players velocity to be in the direction and force per frame strength
-
-            playerRb.velocity += launchVelocity;
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-
-        }
-    }
-
-    
 
     void PlayerDeath()
     {
