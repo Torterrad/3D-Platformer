@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI coinText;
 
 
-    // Start is called before the first frame update
+  
     void Start()
     {
         //sets gravity modifier for entire scene
@@ -43,10 +43,12 @@ public class PlayerController : MonoBehaviour
         coinText.text = "Coin: " + coinCount;
     }
 
-    // Update is called once per frame
+  
+    //change this to fixed update cos physics, but jump doesn't work in fixed update rn idk why
     void Update()
     {
         MovePlayer();
+        Jump();
         PlayerDeath();
     }
 
@@ -94,6 +96,22 @@ public class PlayerController : MonoBehaviour
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
         }
 
+        //updates the players position/applies the velocity moves player
+        playerRb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
+
+        //calculate movement direction
+        Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
+        //rotate player to face movement direction
+        if(movementDirection!= Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    void Jump()
+    {
         //if grounded, reset the coyote timer
         if (isGrounded)
         {
@@ -112,7 +130,7 @@ public class PlayerController : MonoBehaviour
         {
             jumpBufferCounter -= Time.deltaTime;
         }
-
+        //if in the air, apply gravity downwards
         if (!isGrounded)
         {
             playerRb.AddForce(Vector3.down * gravityModifier, ForceMode.Acceleration);
@@ -122,7 +140,15 @@ public class PlayerController : MonoBehaviour
         //If the jump counter is zero and coyote time counter is zero jump when space is presed
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
-            StartJump();
+            //jump code goes here
+            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.deltaTime * 10f);
+            currentVelocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
+
+
+            isGrounded = false;
+
+            coyoteTimeCounter = 0f;
+            jumpBufferCounter = 0f;
         }
         if (Input.GetKeyUp(KeyCode.Space) && !isGrounded && playerRb.velocity.y > 0)
         {
@@ -132,34 +158,6 @@ public class PlayerController : MonoBehaviour
         }
 
 
-
-        //updates the players position/applies the velocity moves player
-        playerRb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
-
-
-        //calculate movement direction
-        Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-
-        //rotate player to face movement direction
-        if(movementDirection!= Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-        }
-
-    }
-
-    void StartJump()
-    {
-        //jump code goes here
-        float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.deltaTime * 10f);
-        currentVelocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
-        
-
-        isGrounded = false;
-
-        coyoteTimeCounter = 0f;
-        jumpBufferCounter = 0f;
     }
 
     public float duration = 0.1f;
