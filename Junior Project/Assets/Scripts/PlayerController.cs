@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float gravityModifier;
 
+    public float groundCheckDistance = 0.3f;
+
 
     public int health = 3;
     public int coinCount;
@@ -28,11 +30,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
 
     public Vector3 currentVelocity;
+    public Transform groundCheckPoint;
 
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI coinText;
 
-
+    public LayerMask groundLayer;
   
     void Start()
     {
@@ -49,17 +52,19 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         Jump();
+        GroundCheck();
         PlayerDeath();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         //checks if the player is on the ground
-        if(collision.gameObject.CompareTag("Ground"))
+       /* if(collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-        }
-        else if (collision.gameObject.CompareTag("Enemy"))
+        }*/
+
+         if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
             health--;
@@ -160,8 +165,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public float duration = 0.1f;
-
     void PlayerDeath()
     {
         if(health < 1)
@@ -170,5 +173,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void GroundCheck()
+    {
+        
+        // Cast a ray downwards from the groundCheckPoint
+        RaycastHit hit;
+        //debug ray to show the raycast in unity
+        Debug.DrawRay(groundCheckPoint.position, Vector3.down, Color.green, groundCheckDistance);
+
+        //if the ray touches object on ground layer
+        if (Physics.Raycast(groundCheckPoint.position, Vector3.down, out hit, groundCheckDistance, groundLayer))
+        {
+            //if the ray touchs object tagged as ground, player is grounded
+            isGrounded = true;
+        }
+        else//else the ray doesn't touch ground
+        {
+            isGrounded = false;
+        }
+
+    }
 
 }

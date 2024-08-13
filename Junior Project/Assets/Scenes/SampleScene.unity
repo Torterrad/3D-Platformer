@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 37259103}
   - component: {fileID: 37259102}
   - component: {fileID: 37259101}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 461262495}
   - component: {fileID: 461262494}
   - component: {fileID: 461262493}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 591650641}
   - component: {fileID: 591650640}
   - component: {fileID: 591650639}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 632360010}
   - component: {fileID: 632360009}
   - component: {fileID: 632360008}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1264,7 +1264,7 @@ GameObject:
   - component: {fileID: 683784809}
   - component: {fileID: 683784808}
   - component: {fileID: 683784807}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2139,13 +2139,17 @@ MonoBehaviour:
   deceleration: 750
   jumpForce: 250
   gravityModifier: 300
+  groundCheckDistance: 1
   health: 3
   coinCount: 0
   isGrounded: 1
   currentVelocity: {x: 0, y: 0, z: 0}
+  groundCheckPoint: {fileID: 1573318359}
   healthText: {fileID: 2145388421}
   coinText: {fileID: 767538839}
-  duration: 0.1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &1074543319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2831,6 +2835,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8443453443946755601, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
   m_PrefabInstance: {fileID: 922369034}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1573318359 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2626205932478927815, guid: 8f5e135a19626f544908fc8f156144b9, type: 3}
+  m_PrefabInstance: {fileID: 277095411}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1586764736 stripped
 Transform:
