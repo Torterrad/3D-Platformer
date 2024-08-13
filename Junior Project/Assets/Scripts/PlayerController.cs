@@ -66,12 +66,12 @@ public class PlayerController : MonoBehaviour
 
         if(jumpPressed)
         {
-            Debug.Log("In Update");
+            Debug.Log("Jump Pressed in update");
             willJump = true;
         }
         if (jumpReleased)
         {
-            Debug.Log("In Update");
+            Debug.Log("Jump Released in update");
             stopJump = true;
         }
 
@@ -186,13 +186,14 @@ public class PlayerController : MonoBehaviour
         }
         if (stopJump && !isGrounded && playerRb.velocity.y > 0)
         {
+            Debug.Log("Jump Released");
             float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.fixedDeltaTime * 10f);
             playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedYVelocity, playerRb.velocity.z);
             stopJump = false;
         }
 
-        if (!isGrounded && !isHanging && currentVelocity.y > 0 && currentVelocity.y < 10  )
-        {
+        if (!isGrounded && !isHanging && playerRb.velocity.y > 0 && playerRb.velocity.y < 10  )
+        {//if in the air and not already hanging at at peak of jump, hang
             StartCoroutine(HangTime());
         }
 

@@ -6,14 +6,12 @@ public class BoostRing : MonoBehaviour
 {
 
     private Rigidbody playerrb;
-    private PlayerController playerController;
 
     public float launchStrength;
     // Start is called before the first frame update
     void Start()
     {
         playerrb = GameObject.Find("Player").GetComponent<Rigidbody>();
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
