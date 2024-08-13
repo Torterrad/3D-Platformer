@@ -176,7 +176,8 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             //mathf.lerp used to smooth the velocity change
-            playerRb.velocity = new Vector3(playerRb.velocity.x, jumpForce, playerRb.velocity.z);
+            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.fixedDeltaTime * 10f);
+            playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
 
             //reset flags after jumping
             isGrounded = false;
@@ -186,9 +187,14 @@ public class PlayerController : MonoBehaviour
         }
         if (stopJump && !isGrounded && playerRb.velocity.y > 0)
         {
-            Debug.Log("Jump Released");
             float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.fixedDeltaTime * 10f);
             playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedYVelocity, playerRb.velocity.z);
+            stopJump = false;
+        }
+
+        if(playerRb.velocity.y < 0)
+        {
+            //this here to prevent short hop bug of stop jump stay true after a full jump then landing 
             stopJump = false;
         }
 
