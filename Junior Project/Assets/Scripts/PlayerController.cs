@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,7 +11,8 @@ public class PlayerController : MonoBehaviour
     public float deceleration;
     public float jumpForce;
     public float gravityModifier;
-
+    public float hangTime;
+    public float hangGravity;
     public float groundCheckDistance = 0.3f;
 
 
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float coyoteTimeCounter;
 
     public bool isGrounded = true;
+    private bool isHanging = false;
 
     private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
@@ -135,8 +136,8 @@ public class PlayerController : MonoBehaviour
         {
             jumpBufferCounter -= Time.deltaTime;
         }
-        //if in the air, apply gravity downwards
-        if (!isGrounded)
+        //if in the air and not hanging, apply gravity downwards
+        if (!isGrounded && !isHanging)
         {
             playerRb.AddForce(Vector3.down * gravityModifier, ForceMode.Acceleration);
         }
@@ -145,21 +146,26 @@ public class PlayerController : MonoBehaviour
         //If the jump counter is zero and coyote time counter is zero jump when space is presed
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
-            //jump code goes here
+            //mathf.lerp used to smooth the velocity change
             float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.deltaTime * 10f);
             currentVelocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
 
-
+            //reset flags after jumping
             isGrounded = false;
-
+            isHanging = false;
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0f;
         }
         if (Input.GetKeyUp(KeyCode.Space) && !isGrounded && playerRb.velocity.y > 0)
         {
-            float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.deltaTime * 10f);
             //code here for stopping the player rising, the short jump
+            float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.deltaTime * 10f);
             currentVelocity = new Vector3(currentVelocity.x, smoothedYVelocity, currentVelocity.z);
+        }
+
+        if(!isGrounded && !isHanging && currentVelocity.y > 0 && currentVelocity.y < 10  )
+        {
+            StartCoroutine(HangTime());
         }
 
 
@@ -192,6 +198,14 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
 
+    }
+
+    IEnumerator HangTime()
+    {
+        gravityModifier /= hangGravity;
+        yield return new WaitForSeconds(hangTime);
+        gravityModifier *= hangGravity;
+        isHanging = false;
     }
 
 }

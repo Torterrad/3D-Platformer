@@ -2133,12 +2133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e96ea255c8a0e24b97c37e7e8925d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 80
+  speed: 65
   rotationSpeed: 3600
-  acceleration: 750
-  deceleration: 750
-  jumpForce: 250
-  gravityModifier: 300
+  acceleration: 450
+  deceleration: 450
+  jumpForce: 200
+  gravityModifier: 400
+  hangTime: 0.1
+  hangGravity: 1.3
   groundCheckDistance: 1
   health: 3
   coinCount: 0
@@ -3549,7 +3551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8443453443946755601, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6
+      value: 8.14
       objectReference: {fileID: 0}
     - target: {fileID: 8443453443946755601, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
       propertyPath: m_LocalRotation.w
