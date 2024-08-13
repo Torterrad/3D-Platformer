@@ -37,7 +37,14 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI coinText;
 
     public LayerMask groundLayer;
-  
+
+    private float horizontalInput;
+    private float verticalInput;
+    public bool jumpPressed;
+    public bool jumpReleased;
+    public bool willJump;
+    public bool stopJump;
+
     void Start()
     {
         //sets gravity modifier for entire scene
@@ -51,10 +58,33 @@ public class PlayerController : MonoBehaviour
     //change this to fixed update cos physics, but jump doesn't work in fixed update rn idk why
     void Update()
     {
+        //get input axis from input manager
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        jumpPressed = Input.GetButtonDown("Jump");
+        jumpReleased = Input.GetButtonUp("Jump");
+
+        if(jumpPressed)
+        {
+            Debug.Log("In Update");
+            willJump = true;
+        }
+        if (jumpReleased)
+        {
+            Debug.Log("In Update");
+            stopJump = true;
+        }
+
+        // Non-physics related operations
+        PlayerDeath();
+    }
+
+    void FixedUpdate()
+    {
+        // Handle physics-related updates
         MovePlayer();
         Jump();
         GroundCheck();
-        PlayerDeath();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -85,25 +115,22 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        //get input axis from input manager
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
+       
         //calculates target velocity based on player input and speed
         Vector3 targetVelocity = new Vector3(horizontalInput, 0f, verticalInput).normalized * speed;
 
         // Interpolate the current velocity towards the target velocity
         if (targetVelocity.magnitude > 0.1f)
         {
-            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
         else
         {
-            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
         }
 
         //updates the players position/applies the velocity moves player
-        playerRb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
+        playerRb.velocity = new Vector3(currentVelocity.x, playerRb.velocity.y, currentVelocity.z);
 
         //calculate movement direction
         Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
@@ -112,7 +139,7 @@ public class PlayerController : MonoBehaviour
         if(movementDirection!= Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
         }
     }
 
@@ -125,16 +152,18 @@ public class PlayerController : MonoBehaviour
         }
         else//else countdown the timer, do count when off the ground/in air
         {
-            coyoteTimeCounter -= Time.deltaTime;
+            coyoteTimeCounter -= Time.fixedDeltaTime;
         }
         //if space pressed
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (willJump)
         {
+            Debug.Log("Jump");
             jumpBufferCounter = jumpBufferTime;
+            willJump = false;
         }
         else
         {
-            jumpBufferCounter -= Time.deltaTime;
+            jumpBufferCounter -= Time.fixedDeltaTime;
         }
         //if in the air and not hanging, apply gravity downwards
         if (!isGrounded && !isHanging)
@@ -147,8 +176,7 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             //mathf.lerp used to smooth the velocity change
-            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.deltaTime * 10f);
-            currentVelocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
+            playerRb.velocity = new Vector3(playerRb.velocity.x, jumpForce, playerRb.velocity.z);
 
             //reset flags after jumping
             isGrounded = false;
@@ -156,14 +184,14 @@ public class PlayerController : MonoBehaviour
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0f;
         }
-        if (Input.GetKeyUp(KeyCode.Space) && !isGrounded && playerRb.velocity.y > 0)
+        if (stopJump && !isGrounded && playerRb.velocity.y > 0)
         {
-            //code here for stopping the player rising, the short jump
-            float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.deltaTime * 10f);
-            currentVelocity = new Vector3(currentVelocity.x, smoothedYVelocity, currentVelocity.z);
+            float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.fixedDeltaTime * 10f);
+            playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedYVelocity, playerRb.velocity.z);
+            stopJump = false;
         }
 
-        if(!isGrounded && !isHanging && currentVelocity.y > 0 && currentVelocity.y < 10  )
+        if (!isGrounded && !isHanging && currentVelocity.y > 0 && currentVelocity.y < 10  )
         {
             StartCoroutine(HangTime());
         }
@@ -203,6 +231,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator HangTime()
     {
         gravityModifier /= hangGravity;
+        isHanging = true;
         yield return new WaitForSeconds(hangTime);
         gravityModifier *= hangGravity;
         isHanging = false;

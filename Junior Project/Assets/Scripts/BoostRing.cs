@@ -8,7 +8,7 @@ public class BoostRing : MonoBehaviour
     private Rigidbody playerrb;
     private PlayerController playerController;
 
-    public int launchStrength;
+    public float launchStrength;
     // Start is called before the first frame update
     void Start()
     {
