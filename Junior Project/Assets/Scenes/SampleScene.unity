@@ -3350,10 +3350,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1194259435}
     m_Modifications:
-    - target: {fileID: 358354744011819950, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
-      propertyPath: launchStrength
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 4476699335422745406, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
       propertyPath: m_Name
       value: Boost Ring
@@ -3562,6 +3558,10 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 2145388421}
+    - target: {fileID: 25444754017096596, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
+      propertyPath: airDragStrength
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1538735150129614396, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.6

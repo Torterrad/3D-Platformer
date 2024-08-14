@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4373650990178209356}
   m_Layer: 0
   m_Name: Boost Ring
-  m_TagString: Untagged
+  m_TagString: Boost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bed38debfdd064f97ee8cc6000a198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchStrength: 2000
+  launchStrength: 400
 --- !u!54 &4373650990178209356
 Rigidbody:
   m_ObjectHideFlags: 0

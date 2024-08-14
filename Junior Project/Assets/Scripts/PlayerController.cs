@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float hangTime;
     public float hangGravity;
     public float groundCheckDistance = 0.3f;
-
+    public float airDragStrength;
 
     public int health = 3;
     public int coinCount;
@@ -66,12 +66,10 @@ public class PlayerController : MonoBehaviour
 
         if(jumpPressed)
         {
-            Debug.Log("Jump Pressed in update");
             willJump = true;
         }
         if (jumpReleased)
         {
-            Debug.Log("Jump Released in update");
             stopJump = true;
         }
 
@@ -85,16 +83,22 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         Jump();
         GroundCheck();
+
+        if(!isGrounded)
+        {
+            // Get the horizontal velocity (x and z axes)
+            Vector3 horizontalVelocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
+
+            // Calculate the drag force for horizontal movement
+            Vector3 airDrag = -horizontalVelocity * airDragStrength * horizontalVelocity.magnitude;
+
+            // Apply the drag force to the player's rigidbody (only on x and z axes)
+            playerRb.AddForce(airDrag, ForceMode.Force);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //checks if the player is on the ground
-       /* if(collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }*/
-
          if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
@@ -110,6 +114,10 @@ public class PlayerController : MonoBehaviour
             coinCount++;
             coinText.text = "Coins: " + coinCount;
             Destroy(other.gameObject);
+        }
+        if (other.gameObject.CompareTag("Boost"))
+        {
+            currentVelocity *= 1.5f;
         }
     }
 

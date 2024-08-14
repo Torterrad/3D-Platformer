@@ -45,11 +45,11 @@ public class BoostRing : MonoBehaviour
             float forceThisFrame = launchStrength * forceMultiplier;
 
             //adds force to launch player in the forward direction * the force this frame
-            // playerrb.AddForce(direction.x, direction.y , direction.z * forceThisFrame, ForceMode.Impulse);
+             playerrb.AddForce(direction.x, direction.y , direction.z * forceThisFrame, ForceMode.Impulse);
             Vector3 launchVelocity = direction * forceThisFrame;
             //set the players velocity to be in the direction and force per frame strength
             
-            playerrb.velocity += launchVelocity;
+            playerrb.velocity = launchVelocity;
             elapsedTime += Time.deltaTime;
 
             yield return null;
