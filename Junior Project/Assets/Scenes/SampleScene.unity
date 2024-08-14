@@ -3555,12 +3555,16 @@ PrefabInstance:
       value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 25444754017096596, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
+      propertyPath: jumpForce
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 25444754017096596, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: healthText
       value: 
       objectReference: {fileID: 2145388421}
     - target: {fileID: 25444754017096596, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: airDragStrength
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1538735150129614396, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: m_LocalPosition.x

@@ -43,22 +43,22 @@ public class PlayerController : MonoBehaviour
     public bool jumpPressed;
     public bool jumpReleased;
     public bool willJump;
+    public bool doubleJump;
+    public bool willDoubleJump;
     public bool stopJump;
 
     void Start()
     {
-        //sets gravity modifier for entire scene
         playerRb = GetComponent<Rigidbody>();
-    //    Physics.gravity *= gravityModifier;
         healthText.text = "Health: " + health;
         coinText.text = "Coin: " + coinCount;
     }
 
   
-    //change this to fixed update cos physics, but jump doesn't work in fixed update rn idk why
+    // Called every frame, user inputs 
     void Update()
     {
-        //get input axis from input manager
+        // get input axis from input manager
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         jumpPressed = Input.GetButtonDown("Jump");
@@ -67,13 +67,18 @@ public class PlayerController : MonoBehaviour
         if(jumpPressed)
         {
             willJump = true;
+
+            if(!isGrounded && doubleJump)
+            {
+                willDoubleJump = true;
+            }
         }
         if (jumpReleased)
         {
             stopJump = true;
         }
 
-        // Non-physics related operations
+       
         PlayerDeath();
     }
 
@@ -86,13 +91,13 @@ public class PlayerController : MonoBehaviour
 
         if(!isGrounded)
         {
-            // Get the horizontal velocity (x and z axes)
+            // Get the horizontal velocity x and z axes
             Vector3 horizontalVelocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
 
             // Calculate the drag force for horizontal movement
             Vector3 airDrag = -horizontalVelocity * airDragStrength * horizontalVelocity.magnitude;
 
-            // Apply the drag force to the player's rigidbody (only on x and z axes)
+            // Apply the drag force to the player's rigidbody on x and z axes
             playerRb.AddForce(airDrag, ForceMode.Force);
         }
     }
@@ -194,7 +199,7 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter = 0f;
         }
         if (stopJump && !isGrounded && playerRb.velocity.y > 0)
-        {
+        {//if player lets go of jump while going up, reduce their veolicty to stall the jump
             float smoothedYVelocity = Mathf.Lerp(playerRb.velocity.y * 0.6f, playerRb.velocity.y * 0.9f, Time.fixedDeltaTime * 10f);
             playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedYVelocity, playerRb.velocity.z);
             stopJump = false;
@@ -210,7 +215,16 @@ public class PlayerController : MonoBehaviour
         {//if in the air and not already hanging at at peak of jump, hang
             StartCoroutine(HangTime());
         }
-
+        //double jump if in air and will double jump is true
+        if(!isGrounded && willDoubleJump)
+        {
+            //Double jump 
+            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.fixedDeltaTime * 10f);
+            playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
+            //reset double jump to stop infinate jumps
+            doubleJump = false;
+            willDoubleJump = false;
+        }
 
     }
 
@@ -235,6 +249,7 @@ public class PlayerController : MonoBehaviour
         {
             //if the ray touchs object tagged as ground, player is grounded
             isGrounded = true;
+            doubleJump = true;
         }
         else//else the ray doesn't touch ground
         {
