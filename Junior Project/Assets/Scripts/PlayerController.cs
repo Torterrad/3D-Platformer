@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float hangGravity;
     public float groundCheckDistance = 0.3f;
     public float airDragStrength;
+    public float dashDuration = 0.4f;
 
     public int health = 3;
     public int coinCount;
@@ -58,7 +59,6 @@ public class PlayerController : MonoBehaviour
         coinText.text = "Coin: " + coinCount;
     }
 
-  
     // Called every frame, user inputs 
     void Update()
     {
@@ -182,7 +182,6 @@ public class PlayerController : MonoBehaviour
         //if space pressed
         if (willJump)
         {
-            Debug.Log("Jump");
             jumpBufferCounter = jumpBufferTime;
             willJump = false;
         }
@@ -285,7 +284,6 @@ public class PlayerController : MonoBehaviour
         {//Propells the player forward
             dashCoolDown = true;
 
-            float duration = 0.4f;
             float elapsedTime = 0f;
             //get the forward direction from player input
             Vector3 dashDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
@@ -299,13 +297,11 @@ public class PlayerController : MonoBehaviour
             //Ensure the dash direction is always normalized
             dashDirection = dashDirection.normalized;
 
-            float initialYVelocity = playerRb.velocity.y;
-
-            while (elapsedTime < duration)
+            while (elapsedTime < dashDuration)
             {
                 //calculates the decreasing force over time
                 //sets launch this frame to launch strength * decay/force decrease
-                float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / duration);
+                float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / dashDuration);
                 float forceThisFrame = dashForce * forceMultiplier;
 
                 //adds force to launch player in the forward direction * the force this frame only on the x and z axis

@@ -9,6 +9,7 @@ public class BoostRing : MonoBehaviour
 
     public float launchStrength;
     public float verticalMultiplier;
+    public float boostDuration = 0.8f;
 
     // Start is called before the first frame update
     void Start()
@@ -42,14 +43,12 @@ public class BoostRing : MonoBehaviour
 
     IEnumerator ApplyForceOverTime(Vector3 direction)
     {
-       // Debug.DrawRay(transform.position, direction * 100, Color.red, 8f);
-        float duration = 0.8f;
         float elapsedTime = 0f;
 
-        while(elapsedTime < duration)
+        while(elapsedTime < boostDuration)
         {
             //calculates the decreasing force over time
-            float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / duration);
+            float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / boostDuration);
             //sets launch this frame to launch strength * decay/force decrease
             float forceThisFrame = launchStrength * forceMultiplier;
 
