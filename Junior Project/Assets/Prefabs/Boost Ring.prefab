@@ -121,6 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchStrength: 400
   verticalMultiplier: 0.2
+  boostDuration: 0.8
+  playerCanControl: 1
 --- !u!54 &4373650990178209356
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -6,15 +6,18 @@ public class BoostRing : MonoBehaviour
 {
 
     private Rigidbody playerrb;
+    private PlayerController playerControllerScript;
 
     public float launchStrength;
     public float verticalMultiplier;
     public float boostDuration = 0.8f;
+    public bool playerCanControl = true;
 
     // Start is called before the first frame update
     void Start()
     {
         playerrb = GameObject.Find("Player").GetComponent<Rigidbody>();
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -45,7 +48,12 @@ public class BoostRing : MonoBehaviour
     {
         float elapsedTime = 0f;
 
-        while(elapsedTime < boostDuration)
+        if (!playerCanControl)
+        {
+            playerControllerScript.StartDisableControl(3f);
+        }
+
+        while (elapsedTime < boostDuration)
         {
             //calculates the decreasing force over time
             float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / boostDuration);
@@ -55,6 +63,8 @@ public class BoostRing : MonoBehaviour
             //adds force to launch player in the forward direction * the force this frame
             playerrb.AddForce(direction * forceThisFrame, ForceMode.Impulse);
             
+            
+
             elapsedTime += Time.deltaTime;
 
             yield return null;

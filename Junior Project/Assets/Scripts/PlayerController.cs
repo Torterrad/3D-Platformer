@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     public bool leftClick;
     public bool willDash;
     public bool dashCoolDown = false;
+    public bool controlable = true;
 
     void Start()
     {
@@ -62,32 +63,34 @@ public class PlayerController : MonoBehaviour
     // Called every frame, user inputs 
     void Update()
     {
-        // get input axis from input manager
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        jumpPressed = Input.GetButtonDown("Jump");
-        jumpReleased = Input.GetButtonUp("Jump");
-        leftClick = Input.GetMouseButtonDown(0);
-
-        if(jumpPressed)
+        if (!controlable)
         {
-            willJump = true;
+            // get input axis from input manager
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            jumpPressed = Input.GetButtonDown("Jump");
+            jumpReleased = Input.GetButtonUp("Jump");
+            leftClick = Input.GetMouseButtonDown(0);
 
-            if(!isGrounded && doubleJump && coyoteTimeCounter < 0f)
+            if (jumpPressed)
             {
-                willDoubleJump = true;
+                willJump = true;
+
+                if (!isGrounded && doubleJump && coyoteTimeCounter < 0f)
+                {
+                    willDoubleJump = true;
+                }
+            }
+            if (jumpReleased)
+            {
+                stopJump = true;
+            }
+
+            if (leftClick && !dashCoolDown)
+            {
+                willDash = true;
             }
         }
-        if (jumpReleased)
-        {
-            stopJump = true;
-        }
-
-        if(leftClick && !dashCoolDown)
-        {
-            willDash = true;
-        }
-
        
         PlayerDeath();
     }
@@ -318,4 +321,18 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public void StartDisableControl(float disableTime)
+    {
+        StartCoroutine(DisableControl(disableTime));
+        Debug.Log("startdisable");
+    }
+
+    public IEnumerator DisableControl(float disableTime)
+    {
+        controlable = true;
+        Debug.Log("Disabled");
+        yield return new WaitForSeconds(disableTime);
+        controlable = false;
+        Debug.Log("Enabled");
+    }
 }
