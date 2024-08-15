@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             willJump = true;
 
-            if(!isGrounded && doubleJump)
+            if(!isGrounded && doubleJump && coyoteTimeCounter < 0f)
             {
                 willDoubleJump = true;
             }
