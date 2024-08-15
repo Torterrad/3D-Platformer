@@ -3555,6 +3555,10 @@ PrefabInstance:
       value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 25444754017096596, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
+      propertyPath: dashForce
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 25444754017096596, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: jumpForce
       value: 250
       objectReference: {fileID: 0}

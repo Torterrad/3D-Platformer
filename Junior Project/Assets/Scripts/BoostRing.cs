@@ -8,6 +8,8 @@ public class BoostRing : MonoBehaviour
     private Rigidbody playerrb;
 
     public float launchStrength;
+    public float verticalMultiplier;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,13 @@ public class BoostRing : MonoBehaviour
         {
             //get the rings local forward direction, set that to the launch direction
             Vector3 launchDirection = transform.forward;
+
+            //Adjust the Y-axis strength by applying a multiplier, stops y axis launching way further than intended
+            if (Mathf.Abs(launchDirection.y) > 0)
+            {
+                launchDirection.y *= verticalMultiplier;
+            }
+
             StartCoroutine(ApplyForceOverTime(launchDirection));
 
         }
@@ -45,11 +54,8 @@ public class BoostRing : MonoBehaviour
             float forceThisFrame = launchStrength * forceMultiplier;
 
             //adds force to launch player in the forward direction * the force this frame
-             playerrb.AddForce(direction.x, direction.y , direction.z * forceThisFrame, ForceMode.Impulse);
-            Vector3 launchVelocity = direction * forceThisFrame;
-            //set the players velocity to be in the direction and force per frame strength
+            playerrb.AddForce(direction * forceThisFrame, ForceMode.Impulse);
             
-            playerrb.velocity = launchVelocity;
             elapsedTime += Time.deltaTime;
 
             yield return null;

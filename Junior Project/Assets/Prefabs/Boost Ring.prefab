@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchStrength: 400
+  verticalMultiplier: 0.2
 --- !u!54 &4373650990178209356
 Rigidbody:
   m_ObjectHideFlags: 0

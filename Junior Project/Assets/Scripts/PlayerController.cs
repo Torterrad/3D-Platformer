@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float acceleration;
     public float deceleration;
     public float jumpForce;
+    public float dashForce;
     public float gravityModifier;
     public float hangTime;
     public float hangGravity;
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public int health = 3;
     public int coinCount;
 
-    private float coyoteTime = 0.05f;
+    private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
 
     public bool isGrounded = true;
@@ -46,6 +47,9 @@ public class PlayerController : MonoBehaviour
     public bool doubleJump;
     public bool willDoubleJump;
     public bool stopJump;
+    public bool leftClick;
+    public bool willDash;
+    public bool dashCoolDown = false;
 
     void Start()
     {
@@ -63,6 +67,7 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         jumpPressed = Input.GetButtonDown("Jump");
         jumpReleased = Input.GetButtonUp("Jump");
+        leftClick = Input.GetMouseButtonDown(0);
 
         if(jumpPressed)
         {
@@ -78,6 +83,11 @@ public class PlayerController : MonoBehaviour
             stopJump = true;
         }
 
+        if(leftClick && !dashCoolDown)
+        {
+            willDash = true;
+        }
+
        
         PlayerDeath();
     }
@@ -88,6 +98,8 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         Jump();
         GroundCheck();
+        StartCoroutine(Dash());
+        
 
         if(!isGrounded)
         {
@@ -265,6 +277,49 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(hangTime);
         gravityModifier *= hangGravity;
         isHanging = false;
+    }
+
+    IEnumerator Dash()
+    {
+        if(willDash && !dashCoolDown)
+        {//Propells the player forward
+            dashCoolDown = true;
+
+            float duration = 0.4f;
+            float elapsedTime = 0f;
+            //get the forward direction from player input
+            Vector3 dashDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+
+            if (dashDirection == Vector3.zero)
+            {
+                //If there's no input, default to the player's facing direction
+                dashDirection = new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
+            }
+
+            //Ensure the dash direction is always normalized
+            dashDirection = dashDirection.normalized;
+
+            float initialYVelocity = playerRb.velocity.y;
+
+            while (elapsedTime < duration)
+            {
+                //calculates the decreasing force over time
+                //sets launch this frame to launch strength * decay/force decrease
+                float forceMultiplier = Mathf.Lerp(1f, 0f, elapsedTime / duration);
+                float forceThisFrame = dashForce * forceMultiplier;
+
+                //adds force to launch player in the forward direction * the force this frame only on the x and z axis
+                playerRb.AddForce(dashDirection * forceThisFrame, ForceMode.Impulse);
+                elapsedTime += Time.deltaTime;
+
+                yield return null;
+
+            }
+            willDash = false;
+            yield return new WaitForSeconds(0.4f);
+            dashCoolDown = false;
+        }
+        
     }
 
 }
