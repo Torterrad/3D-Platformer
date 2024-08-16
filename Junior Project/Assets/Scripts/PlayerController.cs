@@ -17,31 +17,20 @@ public class PlayerController : MonoBehaviour
     public float groundCheckDistance = 0.3f;
     public float airDragStrength;
     public float dashDuration = 0.4f;
+    public float groundStick = 0;
+   
+    private float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+    private float horizontalInput;
+    private float verticalInput;
+    private float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
+    private float maxSlopeAngle = 50f;
 
     public int health = 3;
     public int coinCount;
 
-    private float coyoteTime = 0.2f;
-    private float coyoteTimeCounter;
-
     public bool isGrounded = true;
-    private bool isHanging = false;
-
-    private float jumpBufferTime = 0.2f;
-    private float jumpBufferCounter;
-
-    private Rigidbody playerRb;
-
-    public Vector3 currentVelocity;
-    public Transform groundCheckPoint;
-
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI coinText;
-
-    public LayerMask groundLayer;
-
-    private float horizontalInput;
-    private float verticalInput;
     public bool jumpPressed;
     public bool jumpReleased;
     public bool willJump;
@@ -52,6 +41,18 @@ public class PlayerController : MonoBehaviour
     public bool willDash;
     public bool dashCoolDown = false;
     public bool controlable = true;
+    private bool isHanging = false;
+
+    public Vector3 currentVelocity;
+    private Vector3 groundNormal;
+    public LayerMask groundLayer;
+
+    private Rigidbody playerRb;
+    public Transform groundCheckPoint;
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI coinText;
+
+    
 
     void Start()
     {
@@ -156,15 +157,17 @@ public class PlayerController : MonoBehaviour
         {
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
         }
+        //calculates the direction to move the player on the slope
+        Vector3 projectedVelocity = Vector3.ProjectOnPlane(currentVelocity, groundNormal);
 
         //updates the players position/applies the velocity moves player
-        playerRb.velocity = new Vector3(currentVelocity.x, playerRb.velocity.y, currentVelocity.z);
+        playerRb.velocity = new Vector3(projectedVelocity.x, playerRb.velocity.y, projectedVelocity.z);
 
         //calculate movement direction
-        Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+        Vector3 movementDirection = Vector3.ProjectOnPlane(targetVelocity, groundNormal).normalized;
 
         //rotate player to face movement direction
-        if(movementDirection!= Vector3.zero)
+        if (movementDirection!= Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
@@ -177,6 +180,8 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
+            //sicks player to ground to stop running off slope so player runs down them
+            playerRb.AddForce(Vector3.down * groundStick, ForceMode.Acceleration);
         }
         else//else countdown the timer, do count when off the ground/in air
         {
@@ -261,13 +266,28 @@ public class PlayerController : MonoBehaviour
         //if the ray touches object on ground layer
         if (Physics.Raycast(groundCheckPoint.position, Vector3.down, out hit, groundCheckDistance, groundLayer))
         {
+            float angle = Vector3.Angle(hit.normal, Vector3.up);
             //if the ray touchs object tagged as ground, player is grounded
-            isGrounded = true;
-            doubleJump = true;
+            //if the angle is not to steep, counts as ground
+            if (angle <= maxSlopeAngle)
+            {
+                isGrounded = true;
+                doubleJump = true;
+
+                groundNormal = hit.normal;
+            }
+            else
+            {
+                isGrounded = false;
+                groundNormal = Vector3.up;
+            }
+
+
         }
         else//else the ray doesn't touch ground
         {
             isGrounded = false;
+            groundNormal = Vector3.up;
         }
 
     }
