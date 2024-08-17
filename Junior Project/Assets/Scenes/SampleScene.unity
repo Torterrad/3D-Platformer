@@ -3121,7 +3121,6 @@ GameObject:
   - component: {fileID: 1524537241}
   - component: {fileID: 1524537240}
   - component: {fileID: 1524537239}
-  - component: {fileID: 1524537242}
   m_Layer: 0
   m_Name: Spline
   m_TagString: Untagged
@@ -3324,6 +3323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railSpline: {fileID: 1524537236}
   grindSpeed: 250
+  colliderLength: 1
+  colliderWidth: 0.2
+  colliderHeight: 0.2
 --- !u!114 &1524537239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3340,7 +3342,7 @@ MonoBehaviour:
   m_RebuildOnSplineChange: 0
   m_RebuildFrequency: 30
   m_UpdateColliders: 1
-  m_Sides: 8
+  m_Sides: 6
   m_SegmentsPerUnit: 4
   m_Capped: 1
   m_Radius: 0.25
@@ -3395,27 +3397,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524537234}
   m_Mesh: {fileID: 4300000, guid: 2231e451bc14e464b819119cebd1a386, type: 2}
---- !u!65 &1524537242
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524537234}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 220.52933, y: 84.39998, z: 578.11615}
-  m_Center: {x: 57.525196, y: 41.94999, z: 291.0795}
 --- !u!4 &1539397615 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8443453443946755601, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}

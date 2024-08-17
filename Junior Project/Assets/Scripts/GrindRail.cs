@@ -13,10 +13,15 @@ public class GrindRail : MonoBehaviour
     private float splinePosition = 0f;
     private Rigidbody playerRb;
 
+    public float colliderLength = 1.0f;
+    public float colliderWidth = 0.2f;
+    public float colliderHeight = 0.2f;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GameObject.Find("Player").GetComponent<Rigidbody>();
+        GenerateColliders();
     }
 
     // Update is called once per frame
@@ -26,12 +31,18 @@ public class GrindRail : MonoBehaviour
         {
             Grind();
         }
+
+        if(Input.GetButtonDown("Jump"))
+        {
+            StopGrinding();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("player col");
             StartGrinding();
         }
     }
@@ -46,9 +57,9 @@ public class GrindRail : MonoBehaviour
 
     void Grind()
     {//uses calculatelength as length doesn't work
-        splinePosition+= grindSpeed * Time.deltaTime / railSpline.CalculateLength();
+        splinePosition += grindSpeed * Time.deltaTime / railSpline.CalculateLength();
 
-        if(splinePosition >= 1f)
+        if (splinePosition >= 1f)
         {
             StopGrinding();
             return;
@@ -79,4 +90,29 @@ public class GrindRail : MonoBehaviour
         }
     }
 
+    void GenerateColliders()
+    {
+        float splineLength = railSpline.CalculateLength();
+
+        for (float t = 0; t < 1.0f; t += colliderLength / splineLength)
+        {
+            Vector3 pointOnSpline = railSpline.EvaluatePosition(t);
+            Vector3 tangentOnSpline = railSpline.EvaluateTangent(t);
+            tangentOnSpline.Normalize();
+
+            GameObject colliderObject = new GameObject("RailCollider");
+            colliderObject.transform.position = pointOnSpline;
+            colliderObject.transform.rotation = Quaternion.LookRotation(tangentOnSpline);
+
+            BoxCollider boxCollider = colliderObject.AddComponent<BoxCollider>();
+            boxCollider.size = new Vector3(colliderLength, colliderHeight, colliderWidth);
+
+            // Ensure the collider is set as a trigger
+            boxCollider.isTrigger = true;
+
+            // Make the collider a child of the rail for organization
+            colliderObject.transform.SetParent(transform);
+        }
+
+    }
 }
