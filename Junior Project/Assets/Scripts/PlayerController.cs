@@ -5,10 +5,13 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    //speed
     public float speed;
     public float rotationSpeed;
     public float acceleration;
     public float deceleration;
+
+    //jump and ground
     public float jumpForce;
     public float dashForce;
     public float gravityModifier;

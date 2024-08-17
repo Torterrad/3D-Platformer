@@ -362,6 +362,7 @@
 "Assets/Scripts/BoostRing.cs"
 "Assets/Scripts/CameraFollow.cs"
 "Assets/Scripts/Enemy.cs"
+"Assets/Scripts/GrindRail.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/Projectile.cs"
 "Assets/Scripts/ShootingEnemy.cs"
