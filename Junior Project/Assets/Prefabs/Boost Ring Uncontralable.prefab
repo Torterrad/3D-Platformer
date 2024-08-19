@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 358354744011819950, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
+      propertyPath: boostDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358354744011819950, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
       propertyPath: playerCanControl
       value: 0
       objectReference: {fileID: 0}

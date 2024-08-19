@@ -5,7 +5,7 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    //speed
+    [Header("Speed")]
     public float speed;
     public float rotationSpeed;
     public float acceleration;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public float airDragStrength;
     public float dashDuration = 0.4f;
     public float groundStick = 0;
-   
+
     private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
     private float horizontalInput;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 currentVelocity;
     private Vector3 groundNormal;
     public LayerMask groundLayer;
-
+    
     private Rigidbody playerRb;
     public Transform groundCheckPoint;
     public TextMeshProUGUI healthText;
