@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using BansheeGz;
+using BansheeGz.BGSpline.Curve;
+using BansheeGz.BGSpline.Components;
 
 public class GrindRail : MonoBehaviour
 {
-    public SplineContainer railSpline;
+    public BGCurve railSpline;
+    private BGCcMath math;
     public float grindSpeed = 5f;
 
-    private bool isGrinding = false;
+    public bool isGrinding = false;
     private float splinePosition = 0f;
     private Rigidbody playerRb;
 
@@ -21,7 +25,7 @@ public class GrindRail : MonoBehaviour
     void Start()
     {
         playerRb = GameObject.Find("Player").GetComponent<Rigidbody>();
-        GenerateColliders();
+        //GenerateColliders();
     }
 
     // Update is called once per frame
@@ -38,7 +42,7 @@ public class GrindRail : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnChildTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -57,7 +61,10 @@ public class GrindRail : MonoBehaviour
 
     void Grind()
     {//uses calculatelength as length doesn't work
-        splinePosition += grindSpeed * Time.deltaTime / railSpline.CalculateLength();
+     // Calculate the distance to move based on time and speed
+        float distanceToMove = grindSpeed * Time.deltaTime;
+
+        splinePosition += grindSpeed * Time.deltaTime / math.CalcPositionByDistance(splinePosition, distanceToMove);
 
         if (splinePosition >= 1f)
         {
@@ -66,8 +73,8 @@ public class GrindRail : MonoBehaviour
         }
 
         //get position and direction on spline, normalize not work?
-        Vector3 splinePoint = railSpline.EvaluatePosition(splinePosition);
-        Vector3 splineDirection = railSpline.EvaluateTangent(splinePosition);
+        Vector3 splinePoint = math.CalcPositionByDistanceRatio(splinePosition);
+        Vector3 splineDirection = math.CalcPositionByDistanceRatio(splinePosition);
         splineDirection.Normalize();
 
         //move and rotate the player along the spline
@@ -82,7 +89,7 @@ public class GrindRail : MonoBehaviour
         //detach from rail, allow player to move normally again
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnChildTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -90,7 +97,7 @@ public class GrindRail : MonoBehaviour
         }
     }
 
-    void GenerateColliders()
+   /* void GenerateColliders()
     {
         float splineLength = railSpline.CalculateLength();
 
@@ -114,5 +121,5 @@ public class GrindRail : MonoBehaviour
             colliderObject.transform.SetParent(transform);
         }
 
-    }
+    }*/
 }
