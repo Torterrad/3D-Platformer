@@ -3405,8 +3405,8 @@ MonoBehaviour:
           z: 1.1298859e-20
           w: 0.9201885
     - Position:
-        x: 21.039577
-        y: 75
+        x: 20
+        y: 85
         z: 579.28827
       TangentIn:
         x: 0
@@ -3424,7 +3424,7 @@ MonoBehaviour:
           w: 0.65450597
     - Position:
         x: 166.03958
-        y: 83.9
+        y: 62
         z: 539.28827
       TangentIn:
         x: 0
@@ -3454,10 +3454,10 @@ MonoBehaviour:
         z: 64.06094
       Rotation:
         value:
-          x: -3.2738568e-19
-          y: 0.93401265
-          z: 1.2521801e-19
-          w: -0.3572398
+          x: -3.2738565e-19
+          y: 0.9340127
+          z: 1.25218e-19
+          w: -0.3572399
     m_MetaData:
     - Mode: 2
       Tension: 0.5
@@ -3508,8 +3508,8 @@ MonoBehaviour:
   railSpline: {fileID: 1524537236}
   grindSpeed: 250
   colliderLength: 1
-  colliderWidth: 0.2
-  colliderHeight: 0.2
+  colliderWidth: 3
+  colliderHeight: 1
 --- !u!114 &1524537239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3600,8 +3600,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 220.52933, y: 84.33301, z: 578.11615}
-  m_Center: {x: 57.525196, y: 41.949997, z: 291.0795}
+  m_Size: {x: 221.2545, y: 85.433014, z: 578.1161}
+  m_Center: {x: 57.162666, y: 42.5, z: 291.07947}
 --- !u!4 &1539397615 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8443453443946755601, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}

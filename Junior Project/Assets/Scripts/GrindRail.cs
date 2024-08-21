@@ -32,17 +32,17 @@ public class GrindRail : MonoBehaviour
             Grind();
         }
 
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             StopGrinding();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void ChildTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isGrinding)
         {
-            Debug.Log("player col");
+            Debug.Log("Player entered the grind rail area");
             StartGrinding();
         }
     }
@@ -52,7 +52,7 @@ public class GrindRail : MonoBehaviour
         //might have to change splineposition as this always starts grind at start of rail
         isGrinding = true;
         playerRb.useGravity = false;
-        splinePosition = 0f;
+        splinePosition = FindClosestPointOnSpline(railSpline.Spline, playerRb.position);
     }
 
     void Grind()
@@ -82,7 +82,7 @@ public class GrindRail : MonoBehaviour
         //detach from rail, allow player to move normally again
     }
 
-    private void OnTriggerExit(Collider other)
+    public void ChildTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -94,7 +94,9 @@ public class GrindRail : MonoBehaviour
     {
         float splineLength = railSpline.CalculateLength();
 
-        for (float t = 0; t < 1.0f; t += colliderLength / splineLength)
+        float colliderFrequency = (colliderLength / splineLength) * 3;
+
+        for (float t = 0; t < 1.0f; t += colliderFrequency)
         {
             Vector3 pointOnSpline = railSpline.EvaluatePosition(t);
             Vector3 tangentOnSpline = railSpline.EvaluateTangent(t);
@@ -112,7 +114,30 @@ public class GrindRail : MonoBehaviour
 
             // Make the collider a child of the rail for organization
             colliderObject.transform.SetParent(transform);
+
+            // Add the TriggerForwarder script
+            colliderObject.AddComponent<RailTriggerForwarder>();
         }
 
+    }
+
+    float FindClosestPointOnSpline(Spline spline, Vector3 position)
+    {
+        float closestT = 0f;
+        float closestDistance = float.MaxValue;
+
+        //Iterates over small steps to find the closest point
+        for (float t = 0f; t <= 1f; t += 0.01f)
+        {
+            Vector3 pointOnSpline = SplineUtility.EvaluatePosition(spline, t);
+            float distance = Vector3.Distance(position, pointOnSpline);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestT = t;
+            }
+        }
+        return closestT;
     }
 }
