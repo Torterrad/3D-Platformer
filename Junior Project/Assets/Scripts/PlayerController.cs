@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             //mathf.lerp used to smooth the velocity change
-            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.fixedDeltaTime * 10f);
+            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.5f, Time.fixedDeltaTime * 10f);
             playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
 
             //reset flags after jumping

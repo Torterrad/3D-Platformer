@@ -15,7 +15,10 @@ public class RailTriggerForwarder : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Forward the OnTriggerEnter event to the parent GrindRail script
-        parentScript.ChildTriggerEnter(other);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            parentScript.ChildTriggerEnter(other);
+        }
     }
 
     void OnTriggerExit(Collider other)
