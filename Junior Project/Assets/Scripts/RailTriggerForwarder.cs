@@ -21,6 +21,6 @@ public class RailTriggerForwarder : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         // Forward the OnTriggerExit event to the parent GrindRail script
-        parentScript.ChildTriggerExit(other);
+      //  parentScript.ChildTriggerExit(other);
     }
 }

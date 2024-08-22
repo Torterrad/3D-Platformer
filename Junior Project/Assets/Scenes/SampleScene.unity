@@ -640,15 +640,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.58
+      value: -34.2
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.200091
+      value: -47.7
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalRotation.w
@@ -784,7 +784,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 30, y: 5, z: 100}
+  m_LocalScale: {x: 50, y: 5, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1969,7 +1969,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07631692, y: -0, z: -0, w: 0.9970836}
-  m_LocalPosition: {x: 0, y: 4.5, z: -8.5}
+  m_LocalPosition: {x: 42.4, y: 4.5, z: -8.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2948,15 +2948,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 42.996452
+      value: -23.78355
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0000009536743
+      value: 2.2999992
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.039724
+      value: -33.860367
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3043,15 +3043,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 43.21
+      value: -23.570004
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.3000011
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 50.7
+      value: 2.7999077
       objectReference: {fileID: 0}
     - target: {fileID: 7498561132495877175, guid: 85effbc33a8996645b9fe079d8090575, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3305,9 +3305,9 @@ GameObject:
   - component: {fileID: 1524537240}
   - component: {fileID: 1524537239}
   - component: {fileID: 1524537242}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spline
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3441,17 +3441,17 @@ MonoBehaviour:
           z: 7.7449134e-20
           w: 0.2691329
     - Position:
-        x: 18.279575
-        y: 0
+        x: 90
+        y: 200
         z: 2.1882534
       TangentIn:
         x: 0
         y: 0
-        z: -64.06094
+        z: 0
       TangentOut:
         x: 0
         y: 0
-        z: 64.06094
+        z: 0
       Rotation:
         value:
           x: -3.2738565e-19
@@ -3465,7 +3465,7 @@ MonoBehaviour:
       Tension: 0.5
     - Mode: 2
       Tension: 0.5
-    - Mode: 2
+    - Mode: 1
       Tension: 0.5
     m_Closed: 0
     m_IntData:
@@ -3507,9 +3507,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   railSpline: {fileID: 1524537236}
   grindSpeed: 250
-  colliderLength: 1
-  colliderWidth: 3
-  colliderHeight: 1
+  isGrinding: 0
+  colliderLength: 3
+  colliderWidth: 8
+  colliderHeight: 0.5
 --- !u!114 &1524537239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3529,7 +3530,7 @@ MonoBehaviour:
   m_Sides: 6
   m_SegmentsPerUnit: 4
   m_Capped: 1
-  m_Radius: 0.25
+  m_Radius: 0.35
   m_Range: {x: 0, y: 1}
 --- !u!23 &1524537240
 MeshRenderer:
@@ -3600,8 +3601,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 221.2545, y: 85.433014, z: 578.1161}
-  m_Center: {x: 57.162666, y: 42.5, z: 291.07947}
+  m_Size: {x: 221.88802, y: 200.59793, z: 578.15704}
+  m_Center: {x: 57.379692, y: 99.99585, z: 291.15903}
 --- !u!4 &1539397615 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8443453443946755601, guid: b3c4de357c4c2404dadcdeb73d0ff4da, type: 3}
@@ -4771,7 +4772,7 @@ PrefabInstance:
       objectReference: {fileID: 1459587375}
     - target: {fileID: 1538735150129614396, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 42.4
       objectReference: {fileID: 0}
     - target: {fileID: 1538735150129614396, guid: d0006663820bef84f93c170b9c0956c6, type: 3}
       propertyPath: m_LocalPosition.y

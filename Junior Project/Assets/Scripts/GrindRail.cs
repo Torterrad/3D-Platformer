@@ -9,9 +9,10 @@ public class GrindRail : MonoBehaviour
     public SplineContainer railSpline;
     public float grindSpeed = 5f;
 
-    private bool isGrinding = false;
+    public bool isGrinding = false;
     private float splinePosition = 0f;
     private Rigidbody playerRb;
+    private PlayerController playerScript;
 
     public float colliderLength = 1.0f;
     public float colliderWidth = 0.2f;
@@ -21,6 +22,7 @@ public class GrindRail : MonoBehaviour
     void Start()
     {
         playerRb = GameObject.Find("Player").GetComponent<Rigidbody>();
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         GenerateColliders();
     }
 
@@ -30,6 +32,8 @@ public class GrindRail : MonoBehaviour
         if (isGrinding)
         {
             Grind();
+            playerScript.isGrounded = true;
+            playerScript.doubleJump = true;
         }
 
         if (Input.GetButtonDown("Jump"))
