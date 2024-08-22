@@ -11,6 +11,7 @@ public class BoostRing : MonoBehaviour
     public float launchStrength;
     public float verticalMultiplier;
     public float boostDuration = 0.8f;
+    public float disableDuration = 0.8f;
     public bool playerCanControl = true;
 
     // Start is called before the first frame update
@@ -50,7 +51,7 @@ public class BoostRing : MonoBehaviour
 
         if (!playerCanControl)
         {
-            playerControllerScript.StartDisableControl(3f);
+            playerControllerScript.StartDisableControl(disableDuration);
         }
 
         while (elapsedTime < boostDuration)
