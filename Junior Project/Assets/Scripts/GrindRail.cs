@@ -53,9 +53,9 @@ public class GrindRail : MonoBehaviour
 
     void StartGrinding()
     {//might have to change this to use players gravity mod variable
-        //might have to change splineposition as this always starts grind at start of rail
         isGrinding = true;
         playerRb.useGravity = false;
+        //Finds the cloeset part of the spline to the player
         splinePosition = FindClosestPointOnSpline(railSpline.Spline, playerRb.position);
     }
 
@@ -72,11 +72,19 @@ public class GrindRail : MonoBehaviour
         //get position and direction on spline, normalize not work?
         Vector3 splinePoint = railSpline.EvaluatePosition(splinePosition);
         Vector3 splineDirection = railSpline.EvaluateTangent(splinePosition);
+
         splineDirection.Normalize();
 
-        //move and rotate the player along the spline
-        playerRb.MovePosition(splinePoint);
-        playerRb.MoveRotation(Quaternion.LookRotation(splineDirection));
+        //Smooth variables to interpolate
+        Vector3 currentPosition = playerRb.position;
+        Quaternion currentRotation = playerRb.rotation;
+
+        //Interpolate the position and rotation to smooth
+        Vector3 smoothPosition = Vector3.Lerp(currentPosition, splinePoint, Time.deltaTime * grindSpeed);
+        Quaternion smoothRotation = Quaternion.Slerp(currentRotation, Quaternion.LookRotation(splineDirection), Time.deltaTime * grindSpeed);
+
+        playerRb.MovePosition(smoothPosition);
+        playerRb.MoveRotation(smoothRotation);
     }
 
     void StopGrinding()

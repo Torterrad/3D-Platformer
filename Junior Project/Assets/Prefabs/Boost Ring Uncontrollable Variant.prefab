@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5379028675503790564
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1191635665911529295, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5aff684a2f00a654ca4d9ba906d31bb0, type: 2}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.2559395
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400762831644184965, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417043581817781097, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: boostDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417043581817781097, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: disableDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417043581817781097, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: playerCanControl
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882483026172414, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_VersionIndex
+      value: 7966
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262263827734821231, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_VersionIndex
+      value: 7975
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296536607618818723, guid: a058271b9fa203542abd876683c7a367, type: 3}
+      propertyPath: m_Name
+      value: Boost Ring Uncontrollable Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a058271b9fa203542abd876683c7a367, type: 3}

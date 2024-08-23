@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         healthText.text = "Health: " + health;
+        healthText.text = "Health: " + health;
         coinText.text = "Coin: " + coinCount;
     }
 
@@ -136,7 +137,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Coin"))
         {
             coinCount++;
-            coinText.text = "Coins: " + coinCount;
+            coinText.text = "Coins: " + coinCount / 2;// divide by 2 cos coins triggering twice/adding twice
             Destroy(other.gameObject);
         }
         if (other.gameObject.CompareTag("Boost"))
@@ -211,7 +212,7 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             //mathf.lerp used to smooth the velocity change
-            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.5f, Time.fixedDeltaTime * 10f);
+            float smoothedJumpForce = Mathf.Lerp(jumpForce, jumpForce * 0.2f, Time.fixedDeltaTime * 10f);
             playerRb.velocity = new Vector3(playerRb.velocity.x, smoothedJumpForce, playerRb.velocity.z);
 
             //reset flags after jumping
