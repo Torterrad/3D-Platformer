@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    public float spinSpeed;
+    public float spinSpeedx;
+    public float spinSpeedy;
+    public float spinSpeedz;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +17,6 @@ public class Spin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, spinSpeed, 0);
+        transform.Rotate(spinSpeedx, spinSpeedy, spinSpeedz);
     }
 }
