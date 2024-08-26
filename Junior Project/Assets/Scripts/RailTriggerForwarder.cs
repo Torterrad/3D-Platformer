@@ -6,7 +6,7 @@ public class RailTriggerForwarder : MonoBehaviour
 {
     private GrindRail parentScript;
 
-    void Start()
+    void Awake()
     {
         // Find the GrindRail script on the parent object
         parentScript = GetComponentInParent<GrindRail>();
