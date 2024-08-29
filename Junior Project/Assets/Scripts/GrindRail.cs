@@ -61,8 +61,15 @@ public class GrindRail : MonoBehaviour
     }
 
     void Grind()
-    {//uses calculatelength as length doesn't work
-        splinePosition += grindSpeed * Time.deltaTime / railSpline.CalculateLength();
+    {
+        float splineLength = railSpline.CalculateLength();
+      //  Debug.Log("Spline Length: " + splineLength);
+
+        float normalizedSpeed = grindSpeed / splineLength;
+       // Debug.Log("Normalized Speed: " + normalizedSpeed);
+
+        //normalize the speed so goes at the same speed regardless of length
+        splinePosition += normalizedSpeed * Time.deltaTime;
         //clamp the variable to stop it going above 1
         splinePosition = Mathf.Clamp(splinePosition, 0f, 1f);
         // Debugging the spline position before checking the condition
