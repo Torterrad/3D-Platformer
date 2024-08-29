@@ -68,9 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bed38debfdd064f97ee8cc6000a198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchStrength: 400
+  launchStrength: 600
   verticalMultiplier: 0.2
-  boostDuration: 0.8
+  boostDuration: 1
   disableDuration: 0
   playerCanControl: 1
 --- !u!54 &769005279560163983

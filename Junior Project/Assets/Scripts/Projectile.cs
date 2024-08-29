@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
 {
     private Rigidbody projectileRb;
     public float projectilespeed;
+    public float despawnTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,7 @@ public class Projectile : MonoBehaviour
 
     IEnumerator Despawn()
     {
-        yield return new WaitForSeconds (3);
+        yield return new WaitForSeconds (despawnTime);
         Destroy(gameObject);
     }
 
