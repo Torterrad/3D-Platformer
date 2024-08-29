@@ -57,11 +57,16 @@ public class GrindRail : MonoBehaviour
         playerRb.useGravity = false;
         //Finds the cloeset part of the spline to the player
         splinePosition = FindClosestPointOnSpline(railSpline.Spline, playerRb.position);
+        Debug.Log("Grind Started");
     }
 
     void Grind()
     {//uses calculatelength as length doesn't work
         splinePosition += grindSpeed * Time.deltaTime / railSpline.CalculateLength();
+        //clamp the variable to stop it going above 1
+        splinePosition = Mathf.Clamp(splinePosition, 0f, 1f);
+        // Debugging the spline position before checking the condition
+        Debug.Log("Spline Position: " + splinePosition);
 
         if (splinePosition >= 1f)
         {
@@ -92,6 +97,7 @@ public class GrindRail : MonoBehaviour
         isGrinding = false;
         playerRb.useGravity = true;
         //detach from rail, allow player to move normally again
+        Debug.Log("Stop grind");
     }
 
     public void ChildTriggerExit(Collider other)
