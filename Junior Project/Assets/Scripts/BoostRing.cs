@@ -40,6 +40,13 @@ public class BoostRing : MonoBehaviour
                 launchDirection.y *= verticalMultiplier;
             }
 
+            if (!playerCanControl)
+            {
+                playerControllerScript.currentVelocity = Vector3.zero;
+                playerrb.velocity = Vector3.zero;
+                playerrb.position = gameObject.transform.position;
+            }
+
             StartCoroutine(ApplyForceOverTime(launchDirection));
 
         }
