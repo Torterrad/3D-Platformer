@@ -35751,7 +35751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4417043581817781097, guid: a058271b9fa203542abd876683c7a367, type: 3}
       propertyPath: launchStrength
-      value: 600
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 4417043581817781097, guid: a058271b9fa203542abd876683c7a367, type: 3}
       propertyPath: verticalMultiplier
