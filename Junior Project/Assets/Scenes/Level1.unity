@@ -5284,7 +5284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5216444281230046672, guid: dfa25b5df5685654e8d50712007b8694, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8615911106130086267, guid: dfa25b5df5685654e8d50712007b8694, type: 3}
       propertyPath: m_Radius
@@ -37090,7 +37090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1871035350
 MeshRenderer:
   m_ObjectHideFlags: 0
