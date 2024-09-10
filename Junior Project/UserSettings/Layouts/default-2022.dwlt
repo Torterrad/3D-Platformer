@@ -780,9 +780,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -78, y: 513.515, z: 4341}
+    m_Target: {x: -54.49129, y: 98.10645, z: -178.74036}
     speed: 2
-    m_Value: {x: -78, y: 513.515, z: 4340.9995}
+    m_Value: {x: -54.49129, y: 98.10645, z: -178.74036}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -828,13 +828,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.04933007, y: -0.13531841, z: 0.0067466986, w: -0.9895566}
+    m_Target: {x: -0.076458156, y: -0.0845521, z: 0.006508982, w: -0.99346715}
     speed: 2
-    m_Value: {x: -0.049329765, y: -0.13531758, z: 0.0067466567, w: -0.9895505}
+    m_Value: {x: -0.07645761, y: -0.0845515, z: 0.0065089352, w: -0.99346006}
   m_Size:
-    m_Target: 547.23785
+    m_Target: 2.0905735
     speed: 2
-    m_Value: 573.0239
+    m_Value: 2.0905735
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -904,7 +904,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Customizable Skybox/Stylized Sky/Materials
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -912,7 +912,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Customizable Skybox/Stylized Sky/Materials
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\peter\OneDrive\Documents\GitHub\3D-Platformer\Junior
     Project
@@ -920,9 +920,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 78680000
-    m_LastClickedID: 26744
-    m_ExpandedIDs: 00000000586800005a6800005c6800005e6800006068000062680000646800006668000000ca9a3b
+    m_SelectedIDs: aa680000
+    m_LastClickedID: 26794
+    m_ExpandedIDs: 00000000586800005a6800005c6800005e6800006068000062680000646800006668000072680000926800009668000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
